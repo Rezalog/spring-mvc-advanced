@@ -1,5 +1,6 @@
 package hello.springmvc.basic;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
  * 
  * */
 
+@Slf4j
 @RestController
 public class LogTestController {
-    private final Logger log = LoggerFactory.getLogger(LogTestController.class);
+//    private final Logger log = LoggerFactory.getLogger(LogTestController.class); -- @Slf4j 시 lombok 이 대신 해줌
 
     @RequestMapping("/log-test")
     public String logTest() {
@@ -22,9 +24,10 @@ public class LogTestController {
 
         System.out.println("name = " + name);
 
-        log.trace("trace log={}, {}", name, name2); // appliication.properties 에서 logging level 설정해야 보임
-        log.debug("debug log={}, {}", name, name2); // appliication.properties 에서 logging level 설정해야 보임
+        log.trace("trace log={}, {}", name, name2); // application.properties 에서 logging level 설정해야 보임
+        log.debug("debug log={}, {}", name, name2); // application.properties 에서 logging level 설정해야 보임
         log.info("info log={}", name);
+//        log.info("info log={}" + name); -- 연산으로하면 String 연산 -> 메서드호출이므로 이미 resource 손실, 파라미터로해야 메서드 호출이 안됨
         log.warn("warn log={}, {}", name, name2);
         log.error("error log={}, {}", name, name2);
 
