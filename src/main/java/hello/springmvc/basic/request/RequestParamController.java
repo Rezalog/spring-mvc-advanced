@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 
+/**
+ * hello-form.html 에서 입력값 입력 후 post로 요청
+ * */
+
 @Slf4j
 @Controller
 public class RequestParamController {
 
-    @RequestMapping("/request-param/v1")
+    @RequestMapping("/request-param-v1")
     public void requestParamV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         int age = Integer.parseInt(request.getParameter("age"));
