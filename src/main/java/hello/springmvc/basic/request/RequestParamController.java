@@ -1,10 +1,12 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -102,6 +104,58 @@ public class RequestParamController {
 
         log.info("multi : username={}, age={}", paramMap.get("username"), paramMap.get("age"));
         // multi : username=[hello, hello2], age=[20]
+        return "ok";
+    }
+
+    // -------------------
+    // @ModelAttribute
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v0")
+    public String modelAttributeV0(@RequestParam String username,
+                                   @RequestParam(defaultValue = "-1") int age) {
+        HelloData helloData = new HelloData();
+        helloData.setUsername(username);
+        helloData.setAge(age);
+
+        log.info("no modelAttribute helloData : username={}, age={}", username, age);
+        log.info("no modelAttribute helloData.toString : helloData={}",helloData);
+        /*
+        * helloData : username=hello, age=20
+          helloData.toString : helloData=HelloData(username=hello, age=20)
+        * */
+        return "ok";
+    }
+
+    /**
+     * @ModelAttribute 사용 시 HelloData 의 setXXX 을 호출하여 바인딩한다.(xxx: 프로퍼티)
+     * 따라서 별도의 set method 를 실행하지 않아도 됨.
+     *
+     * ※ 프로퍼티 : 객체에 setUsername(), getUsername() 메서드가 있으면 이 객체는
+     * */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+        log.info("helloData.toString : helloData={}",helloData);
+        /*
+        * helloData : username=hello, age=20
+          helloData.toString : helloData=HelloData(username=hello, age=20)
+        * */
+        return "ok";
+    }
+
+    /**
+     * @ModelAttribute 는 생략할 수 있다.
+     * 그런데 @RequestParam 도 생략할 수 있으니 혼란이 발생할 수 있다.
+     *
+     * 스프링은 해당 생략시 다음과 같은 규칙을 적용한다.
+     * String , int , Integer 같은 단순 타입 = @RequestParam
+     * 나머지 = @ModelAttribute (argument resolver 로 지정해둔 타입 외에)
+     * */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData) {
+        log.info("helloData : helloData={}", helloData);
         return "ok";
     }
 }
