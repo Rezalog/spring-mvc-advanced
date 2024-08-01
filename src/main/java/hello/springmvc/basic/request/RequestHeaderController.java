@@ -59,3 +59,12 @@ public class RequestHeaderController {
         return "ok";
     }
 }
+/*
+* [nio-8080-exec-1] h.s.b.request.RequestHeaderController    : request=org.apache.catalina.connector.RequestFacade@2308195e
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : response=org.springframework.web.context.request.async.StandardServletAsyncWebRequest$LifecycleHttpServletResponse@353a5058
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : httpMethod=GET
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : locale=ko
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : headerMap={host=[localhost:8080], connection=[keep-alive], sec-ch-ua=["Not)A;Brand";v="99", "Microsoft Edge";v="127", "Chromium";v="127"], sec-ch-ua-mobile=[?0], sec-ch-ua-platform=["Windows"], upgrade-insecure-requests=[1], user-agent=[Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0], accept=[text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*\/\*;q=0.8,application/signed-exchange;v=b3;q=0.7], sec-fetch-site=[same-origin], sec-fetch-mode=[navigate], sec-fetch-user=[?1], sec-fetch-dest=[document], referer=[http://localhost:8080/], accept-encoding=[gzip, deflate, br, zstd], accept-language=[ko,en;q=0.9,en-US;q=0.8]}
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : header host=localhost:8080
+[nio-8080-exec-1] h.s.b.request.RequestHeaderController    : myCookie=null
+* */
