@@ -4,11 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * hello-form.html 에서 입력값 입력 후 post로 요청
@@ -49,7 +51,7 @@ public class RequestParamController {
         return "ok";
     }
 
-    // 동일하게 작동하지만, 명시적으로 @RequestParam 을 쓰는 것을 권장
+    // 동일하게 작동하지만, required=false 로 적용되고, 명확하게 @RequestParam 을 쓰는 것을 권장
     @ResponseBody
     @RequestMapping("/request-param-v4")
     public String requestParamV4(
@@ -63,9 +65,43 @@ public class RequestParamController {
     @ResponseBody
     @RequestMapping("/request-param-required")
     public String requestParamRequired(
-            @RequestParam(required = true) String username,
-            @RequestParam(required = false) Integer age) { // int 로 선언 시, null 이 들어갈 수 없어 Integer 로(500 err)
-        log.info("username={}, age={}", username, age);
+            @RequestParam(required = true) String username, // GET /request-param-required?username= 으로 request 시 OK, null 이 아닌 ""
+            @RequestParam(required = false) Integer age) { // null 이 들어갈 수 없어 Integer 로(500 err) 하거나, defaultValue 설정
+//        log.info("username={}, age={}", username, age);
+        return "ok";
+    }
+
+    // default 사용 시 required 가 필요 없음
+    @ResponseBody
+    @RequestMapping("/request-param-default")
+    public String requestParamDefault(
+            @RequestParam(defaultValue = "guest") String username,
+            @RequestParam(defaultValue = "-1") int age) {
+//        log.info("username={}, age={}", username, age);
+        return "ok";
+    }
+
+
+    // GET /request-param-multi-value-map?username=hello&age=20&username=hello2
+    // username=hello, age=20
+    @ResponseBody
+    @RequestMapping("/request-param-map")
+    public String requestParamMap(
+            @RequestParam Map<String, Object> paramMap) {
+
+        log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+
+    // GET /request-param-multi-value-map?username=hello&age=20&username=hello2
+    // multi : username=[hello, hello2], age=[20]
+    @ResponseBody
+    @RequestMapping("/request-param-multi-value-map")
+    public String requestParamMultiValueMap(
+            @RequestParam MultiValueMap<String, Object> paramMap) {
+
+        log.info("multi : username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        // multi : username=[hello, hello2], age=[20]
         return "ok";
     }
 }
