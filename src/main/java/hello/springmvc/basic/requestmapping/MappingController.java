@@ -129,6 +129,7 @@ public class MappingController {
      * 직접 headers 에 접근하기엔 spring mvc 특성상 부가적인 처리때문에 consumes 사용
      *
      * 서버의 Controller 입장에서는 request 의 contentType을 소비하는 입장이므로 consumes 라는 명명
+     * 즉, consumes는 클라이언트가 서버에게 보내는 데이터 타입을 명시한다.(이 타입으로 보내주세요)
      *
      * request : postman 으로 헤더에 Content-Type 프로퍼티에 application/json 를 넣고 request
      * */
@@ -141,6 +142,7 @@ public class MappingController {
      * 미디어 타입 조건 매핑 - HTTP 요청 Accept, produce
      * HTTP 요청의 Accept 헤더를 기반으로 미디어 타입으로 매핑한다.
      * 만약 맞지 않으면 HTTP 406 상태코드(Not Acceptable)을 반환한다
+     * produces는 서버가 클라이언트에게 반환하는 데이터 타입을 명시한다.(이 타입으로 반환할게)
      *
      * produces = "text/plain"
      * produces = {"text/plain", "application/*"}
